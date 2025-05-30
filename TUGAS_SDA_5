@@ -134,3 +134,51 @@ tk.Label(frame_perkenalan, text="Deskripsi: Proyek ini adalah aplikasi untuk men
 frame_tombol2 = tk.Frame(frame_perkenalan, bg="#3a2f0b")
 frame_tombol2.pack(pady=20)
 create_hover_button(frame_tombol2, "Kembali ke Menu Awal", lambda: switch_frame(frame_welcome)).pack()
+
+frame_project = tk.Frame(root, bg="#2f2f2f")
+
+frame_judul3 = tk.Frame(frame_project, bg="#2f2f2f")
+frame_judul3.pack(fill='x', pady=(30,20))
+
+label_judul3 = tk.Label(frame_judul3, text="Proyek Teori SDA",
+                        font=("Consolas", 22, "bold"), fg="#ff9900", bg="#2f2f2f")
+label_judul3.pack(expand=True)
+
+frame_input = tk.Frame(frame_project, bg="#2f2f2f")
+frame_input.pack(pady=10)
+
+tk.Label(frame_input, text="Masukkan Nama:", fg="#ff9900", bg="#2f2f2f",
+         font=("Consolas", 12, "bold")).grid(row=0, column=0, sticky="w", pady=5)
+entry_nama = tk.Entry(frame_input, font=("Consolas", 12), width=30)
+entry_nama.grid(row=0, column=1, pady=5, padx=5)
+
+tk.Label(frame_input, text="Masukkan Skor:", fg="#ff9900", bg="#2f2f2f",
+         font=("Consolas", 12, "bold")).grid(row=1, column=0, sticky="w", pady=5)
+entry_skor = tk.Entry(frame_input, font=("Consolas", 12), width=30)
+entry_skor.grid(row=1, column=1, pady=5, padx=5)
+
+def tambah_skor():
+    nama = entry_nama.get().strip()
+    skor_input = entry_skor.get().strip()
+    if not nama or not skor_input:
+        messagebox.showwarning("Input Kosong", "Nama dan skor harus diisi.")
+        return
+    try:
+        skor = int(skor_input)
+        simpan_skor(nama, skor)
+        messagebox.showinfo("Sukses", f"Skor berhasil disimpan/diupdate!")
+    except ValueError:
+        messagebox.showerror("Error", "Skor harus berupa angka.")
+
+frame_tombol3 = tk.Frame(frame_project, bg="#2f2f2f")
+frame_tombol3.pack(pady=20)
+
+create_hover_button(frame_tombol3, "Simpan/Update Skor", tambah_skor).pack(pady=8)
+create_hover_button(frame_tombol3, "Reset Semua Skor", reset_skor).pack(pady=8)
+create_hover_button(frame_tombol3, "Lihat Skor Tertinggi", tampilkan_skor_tertinggi).pack(pady=8)
+create_hover_button(frame_tombol3, "Tampilkan Chart Skor", tampilkan_chart).pack(pady=8)
+create_hover_button(frame_tombol3, "Kembali ke Menu Awal", lambda: switch_frame(frame_welcome)).pack(pady=8)
+
+cek_file_csv()
+switch_frame(frame_welcome)
+root.mainloop()
